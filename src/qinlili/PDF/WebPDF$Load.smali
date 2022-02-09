@@ -11,7 +11,7 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x20
+    accessFlags = 0x0
     name = "Load"
 .end annotation
 
@@ -42,9 +42,10 @@
 
 # virtual methods
 .method public onClick(Landroid/content/DialogInterface;I)V
-    .registers 10
+    .registers 8
 
-    .prologue
+    const/4 v4, 0x0
+
     iget-object v0, p0, Lqinlili/PDF/WebPDF$Load;->this$0:Lqinlili/PDF/WebPDF;
 
     iget-object v0, v0, Lqinlili/PDF/WebPDF;->et:Landroid/widget/EditText;
@@ -61,9 +62,9 @@
 
     invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
-    move-result v2
+    move-result v1
 
-    if-nez v2, :cond_2f
+    if-nez v1, :cond_30
 
     new-instance v1, Ljava/lang/StringBuilder;
 
@@ -83,66 +84,65 @@
 
     move-result-object v0
 
-    iget-object p0, p0, Lqinlili/PDF/WebPDF$Load;->this$0:Lqinlili/PDF/WebPDF;
+    iget-object v1, p0, Lqinlili/PDF/WebPDF$Load;->this$0:Lqinlili/PDF/WebPDF;
 
-    iget-object v1, p0, Lqinlili/PDF/WebPDF;->w:Landroid/webkit/WebView;
+    iget-object v1, v1, Lqinlili/PDF/WebPDF;->w:Landroid/webkit/WebView;
 
     invoke-virtual {v1, v0}, Landroid/webkit/WebView;->loadUrl(Ljava/lang/String;)V
 
+    :goto_2f
     return-void
 
-    :cond_2f
-    iget-object p0, p0, Lqinlili/PDF/WebPDF$Load;->this$0:Lqinlili/PDF/WebPDF;
+    :cond_30
+    iget-object v0, p0, Lqinlili/PDF/WebPDF$Load;->this$0:Lqinlili/PDF/WebPDF;
 
-    const-string v0, "你啥也没输入"
+    const-string v1, "你啥也没输入"
 
-    const/4 v1, 0x0
+    invoke-static {v0, v1, v4}, Landroid/widget/Toast;->makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;
 
-    invoke-static {p0, v0, v1}, Landroid/widget/Toast;->makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;
+    move-result-object v1
 
-    move-result-object v0
+    invoke-virtual {v1}, Landroid/widget/Toast;->show()V
 
-    invoke-virtual {v0}, Landroid/widget/Toast;->show()V
+    new-instance v1, Landroid/widget/EditText;
 
-    new-instance v0, Landroid/widget/EditText;
+    invoke-direct {v1, v0}, Landroid/widget/EditText;-><init>(Landroid/content/Context;)V
 
-    invoke-direct {v0, p0}, Landroid/widget/EditText;-><init>(Landroid/content/Context;)V
+    iput-object v1, v0, Lqinlili/PDF/WebPDF;->et:Landroid/widget/EditText;
 
-    iput-object v0, p0, Lqinlili/PDF/WebPDF;->et:Landroid/widget/EditText;
+    new-instance v1, Landroid/app/AlertDialog$Builder;
 
-    new-instance v0, Landroid/app/AlertDialog$Builder;
+    invoke-direct {v1, v0}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;)V
 
-    invoke-direct {v0, p0}, Landroid/app/AlertDialog$Builder;-><init>(Landroid/content/Context;)V
+    const-string v2, "PDF地址"
 
-    const-string v1, "PDF地址"
+    invoke-virtual {v1, v2}, Landroid/app/AlertDialog$Builder;->setTitle(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
 
-    invoke-virtual {v0, v1}, Landroid/app/AlertDialog$Builder;->setTitle(Ljava/lang/CharSequence;)Landroid/app/AlertDialog$Builder;
+    move-result-object v1
 
-    move-result-object v0
+    iget-object v2, v0, Lqinlili/PDF/WebPDF;->et:Landroid/widget/EditText;
 
-    iget-object v1, p0, Lqinlili/PDF/WebPDF;->et:Landroid/widget/EditText;
+    invoke-virtual {v1, v2}, Landroid/app/AlertDialog$Builder;->setView(Landroid/view/View;)Landroid/app/AlertDialog$Builder;
 
-    invoke-virtual {v0, v1}, Landroid/app/AlertDialog$Builder;->setView(Landroid/view/View;)Landroid/app/AlertDialog$Builder;
+    move-result-object v1
 
-    move-result-object v0
+    const-string v2, "确定"
 
-    const-string v1, "确定"
+    new-instance v3, Lqinlili/PDF/WebPDF$Load;
 
-    new-instance v2, Lqinlili/PDF/WebPDF$Load;
+    invoke-direct {v3, v0}, Lqinlili/PDF/WebPDF$Load;-><init>(Lqinlili/PDF/WebPDF;)V
 
-    invoke-direct {v2, p0}, Lqinlili/PDF/WebPDF$Load;-><init>(Lqinlili/PDF/WebPDF;)V
-
-    invoke-virtual {v0, v1, v2}, Landroid/app/AlertDialog$Builder;->setPositiveButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
+    invoke-virtual {v1, v2, v3}, Landroid/app/AlertDialog$Builder;->setPositiveButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
 
     move-result-object v1
 
     const-string v2, "取消"
 
-    new-instance v0, Lqinlili/PDF/WebPDF$Exit;
+    new-instance v3, Lqinlili/PDF/WebPDF$Exit;
 
-    invoke-direct {v0, p0}, Lqinlili/PDF/WebPDF$Exit;-><init>(Lqinlili/PDF/WebPDF;)V
+    invoke-direct {v3, v0}, Lqinlili/PDF/WebPDF$Exit;-><init>(Lqinlili/PDF/WebPDF;)V
 
-    invoke-virtual {v1, v2, v0}, Landroid/app/AlertDialog$Builder;->setNegativeButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
+    invoke-virtual {v1, v2, v3}, Landroid/app/AlertDialog$Builder;->setNegativeButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
 
     move-result-object v0
 
@@ -150,9 +150,7 @@
 
     move-result-object v0
 
-    const v3, 0x0
+    invoke-virtual {v0, v4}, Landroid/app/AlertDialog;->setCancelable(Z)V
 
-    invoke-virtual {v0, v3}, Landroid/app/AlertDialog;->setCancelable(Z)V
-
-    return-void
+    goto :goto_2f
 .end method

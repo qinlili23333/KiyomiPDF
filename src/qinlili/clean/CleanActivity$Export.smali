@@ -31,7 +31,7 @@
 
 # virtual methods
 .method public run()V
-    .registers 4
+    .registers 3
     .annotation runtime Ljava/lang/Override;
     .end annotation
 

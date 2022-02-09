@@ -11,7 +11,7 @@
 .end annotation
 
 .annotation system Ldalvik/annotation/InnerClass;
-    accessFlags = 0x20
+    accessFlags = 0x0
     name = "Load"
 .end annotation
 
@@ -42,22 +42,21 @@
 
 # virtual methods
 .method public onClick(Landroid/content/DialogInterface;I)V
-    .registers 10
+    .registers 6
 
-    .prologue
-    iget-object p0, p0, Lqinlili/PDF/WebPDF$Exit;->this$0:Lqinlili/PDF/WebPDF;
+    iget-object v0, p0, Lqinlili/PDF/WebPDF$Exit;->this$0:Lqinlili/PDF/WebPDF;
 
-    const-string v0, "用户取消了操作"
+    const-string v1, "用户取消了操作"
 
-    const/4 v1, 0x0
+    const/4 v2, 0x0
 
-    invoke-static {p0, v0, v1}, Landroid/widget/Toast;->makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;
+    invoke-static {v0, v1, v2}, Landroid/widget/Toast;->makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;
 
-    move-result-object v0
+    move-result-object v1
 
-    invoke-virtual {v0}, Landroid/widget/Toast;->show()V
+    invoke-virtual {v1}, Landroid/widget/Toast;->show()V
 
-    invoke-virtual {p0}, Lqinlili/PDF/WebPDF;->finishAndRemoveTask()V
+    invoke-virtual {v0}, Lqinlili/PDF/WebPDF;->finishAndRemoveTask()V
 
     return-void
 .end method

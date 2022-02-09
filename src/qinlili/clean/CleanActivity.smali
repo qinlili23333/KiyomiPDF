@@ -124,16 +124,6 @@
     goto :goto_14
 .end method
 
-.method private FilenameFilter()Ljava/io/FilenameFilter;
-    .registers 2
-
-    new-instance v0, Lqinlili/clean/AllDataFilenameFilter;
-
-    invoke-direct {v0, p0}, Lqinlili/clean/AllDataFilenameFilter;-><init>(Lqinlili/clean/CleanActivity;)V
-
-    return-object v0
-.end method
-
 .method private FilesDir()Ljava/io/File;
     .registers 3
 
@@ -268,7 +258,7 @@
 
 # virtual methods
 .method public export(Landroid/view/View;)V
-    .registers 10
+    .registers 4
 
     const-string v0, "正在导出数据\n目标下载目录内KiyomiDataExport目录\n如未导出请检查是否授予小轻管理所有文件的权限"
 
@@ -310,10 +300,10 @@
 
     move-result v0
 
-    packed-switch v0, :pswitch_data_74
+    packed-switch v0, :pswitch_data_52
 
     :goto_8
-    :pswitch_8  #0x7f060006
+    :pswitch_8  #0x7f060006, 0x7f060008
     return-void
 
     :pswitch_9  #0x7f060005
@@ -345,38 +335,7 @@
 
     goto :goto_8
 
-    :pswitch_24  #0x7f060008
-    invoke-direct {p0}, Lqinlili/clean/CleanActivity;->FilesDir()Ljava/io/File;
-
-    move-result-object v0
-
-    invoke-direct {p0}, Lqinlili/clean/CleanActivity;->FilenameFilter()Ljava/io/FilenameFilter;
-
-    move-result-object v1
-
-    invoke-direct {p0, v0, v2, v1}, Lqinlili/clean/CleanActivity;->Clean(Ljava/io/File;ZLjava/io/FilenameFilter;)V
-
-    invoke-direct {p0}, Lqinlili/clean/CleanActivity;->ProtectedStorage()Ljava/io/File;
-
-    move-result-object v0
-
-    invoke-direct {p0, v0, v2, v1}, Lqinlili/clean/CleanActivity;->Clean(Ljava/io/File;ZLjava/io/FilenameFilter;)V
-
-    invoke-direct {p0}, Lqinlili/clean/CleanActivity;->ExternalCache()Ljava/io/File;
-
-    move-result-object v0
-
-    invoke-direct {p0, v0, v2, v1}, Lqinlili/clean/CleanActivity;->Clean(Ljava/io/File;ZLjava/io/FilenameFilter;)V
-
-    invoke-static {}, Landroid/os/Process;->myPid()I
-
-    move-result v0
-
-    invoke-static {v0}, Landroid/os/Process;->killProcess(I)V
-
-    goto :goto_8
-
-    :pswitch_45  #0x7f060009
+    :pswitch_24  #0x7f060009
     invoke-direct {p0}, Lqinlili/clean/CleanActivity;->FilesDir()Ljava/io/File;
 
     move-result-object v0
@@ -407,7 +366,7 @@
 
     goto :goto_8
 
-    :pswitch_66  #0x7f06000a
+    :pswitch_45  #0x7f06000a
     invoke-static {}, Landroid/webkit/WebStorage;->getInstance()Landroid/webkit/WebStorage;
 
     move-result-object v0
@@ -420,22 +379,20 @@
 
     goto :goto_8
 
-    nop
-
-    :pswitch_data_74
+    :pswitch_data_52
     .packed-switch 0x7f060004
         :pswitch_17  #7f060004
         :pswitch_9  #7f060005
         :pswitch_8  #7f060006
         :pswitch_1b  #7f060007
-        :pswitch_24  #7f060008
-        :pswitch_45  #7f060009
-        :pswitch_66  #7f06000a
+        :pswitch_8  #7f060008
+        :pswitch_24  #7f060009
+        :pswitch_45  #7f06000a
     .end packed-switch
 .end method
 
 .method public onCreate(Landroid/os/Bundle;)V
-    .registers 14
+    .registers 7
 
     const/4 v4, 0x1
 
@@ -553,7 +510,7 @@
 
     invoke-virtual {v0, v1}, Landroid/app/ActionBar;->setBackgroundDrawable(Landroid/graphics/drawable/Drawable;)V
 
-    goto/16 :goto_36
+    goto :goto_36
 .end method
 
 .method public onOptionsItemSelected(Landroid/view/MenuItem;)Z

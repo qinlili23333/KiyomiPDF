@@ -23,7 +23,9 @@
 .end method
 
 .method public onCreate(Landroid/os/Bundle;)V
-    .registers 14
+    .registers 5
+
+    const/4 v2, 0x0
 
     invoke-super {p0, p1}, Landroid/app/Activity;->onCreate(Landroid/os/Bundle;)V
 
@@ -63,11 +65,7 @@
 
     invoke-virtual {p0, v0}, Lqinlili/Splash;->startActivity(Landroid/content/Intent;)V
 
-    const v0, 0x0
-
-    const v1, 0x0
-
-    invoke-virtual {p0, v0, v1}, Lqinlili/Splash;->overridePendingTransition(II)V
+    invoke-virtual {p0, v2, v2}, Lqinlili/Splash;->overridePendingTransition(II)V
 
     invoke-virtual {p0}, Lqinlili/Splash;->finish()V
 

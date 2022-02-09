@@ -2,6 +2,15 @@
 .super Landroid/app/Activity;
 
 
+# annotations
+.annotation system Ldalvik/annotation/MemberClasses;
+    value = {
+        Lqinlili/PDF/WebPDF$Exit;,
+        Lqinlili/PDF/WebPDF$Load;
+    }
+.end annotation
+
+
 # static fields
 .field private static final PICK_PDF_FILE:I = 0x2
 
@@ -28,7 +37,7 @@
 
 # virtual methods
 .method public getPermission()V
-    .registers 10
+    .registers 5
 
     sget v0, Landroid/os/Build$VERSION;->SDK_INT:I
 
@@ -43,6 +52,7 @@
     if-eqz v0, :cond_d
 
     :cond_c
+    :goto_c
     return-void
 
     :cond_d
@@ -80,7 +90,7 @@
 
     invoke-virtual {p0, v1}, Landroid/app/Activity;->startActivity(Landroid/content/Intent;)V
 
-    return-void
+    goto :goto_c
 .end method
 
 .method protected onActivityResult(IILandroid/content/Intent;)V
@@ -190,7 +200,13 @@
 .end method
 
 .method public onConfigurationChanged(Landroid/content/res/Configuration;)V
-    .registers 15
+    .registers 7
+
+    const/4 v4, -0x1
+
+    const v3, -0xffffff
+
+    const/4 v2, 0x0
 
     invoke-super {p0, p1}, Landroid/app/Activity;->onConfigurationChanged(Landroid/content/res/Configuration;)V
 
@@ -204,7 +220,7 @@
 
     move-result v1
 
-    if-eqz v1, :cond_40
+    if-eqz v1, :cond_3e
 
     const-string v1, "FORCE_DARK"
 
@@ -212,26 +228,26 @@
 
     move-result v1
 
-    if-eqz v1, :cond_1d
+    if-eqz v1, :cond_20
 
-    const v2, 0x2
+    const/4 v1, 0x2
 
-    invoke-static {v0, v2}, Landroidx/webkit/WebSettingsCompat;->setForceDark(Landroid/webkit/WebSettings;I)V
+    invoke-static {v0, v1}, Landroidx/webkit/WebSettingsCompat;->setForceDark(Landroid/webkit/WebSettings;I)V
 
-    :cond_1d
+    :cond_20
     const-string v1, "FORCE_DARK_STRATEGY"
 
     invoke-static {v1}, Landroidx/webkit/WebViewFeature;->isFeatureSupported(Ljava/lang/String;)Z
 
     move-result v1
 
-    if-eqz v1, :cond_29
+    if-eqz v1, :cond_2c
 
     const/4 v1, 0x1
 
     invoke-static {v0, v1}, Landroidx/webkit/WebSettingsCompat;->setForceDarkStrategy(Landroid/webkit/WebSettings;I)V
 
-    :cond_29
+    :cond_2c
     invoke-virtual {p0}, Landroid/app/Activity;->getWindow()Landroid/view/Window;
 
     move-result-object v0
@@ -240,45 +256,38 @@
 
     move-result-object v1
 
-    const/16 v2, 0x0
-
     invoke-virtual {v1, v2}, Landroid/view/View;->setSystemUiVisibility(I)V
 
-    const v1, -0xffffff
+    invoke-virtual {v0, v3}, Landroid/view/Window;->setStatusBarColor(I)V
 
-    invoke-virtual {v0, v1}, Landroid/view/Window;->setStatusBarColor(I)V
+    invoke-virtual {v0, v3}, Landroid/view/Window;->setNavigationBarColor(I)V
 
-    invoke-virtual {v0, v1}, Landroid/view/Window;->setNavigationBarColor(I)V
-
+    :goto_3d
     return-void
 
-    :cond_40
+    :cond_3e
     const-string v1, "FORCE_DARK"
 
     invoke-static {v1}, Landroidx/webkit/WebViewFeature;->isFeatureSupported(Ljava/lang/String;)Z
 
     move-result v1
 
-    if-eqz v1, :cond_4e
-
-    const v2, 0x0
+    if-eqz v1, :cond_49
 
     invoke-static {v0, v2}, Landroidx/webkit/WebSettingsCompat;->setForceDark(Landroid/webkit/WebSettings;I)V
 
-    :cond_4e
+    :cond_49
     const-string v1, "FORCE_DARK_STRATEGY"
 
     invoke-static {v1}, Landroidx/webkit/WebViewFeature;->isFeatureSupported(Ljava/lang/String;)Z
 
     move-result v1
 
-    if-eqz v1, :cond_5a
+    if-eqz v1, :cond_54
 
-    const/4 v1, 0x0
+    invoke-static {v0, v2}, Landroidx/webkit/WebSettingsCompat;->setForceDarkStrategy(Landroid/webkit/WebSettings;I)V
 
-    invoke-static {v0, v1}, Landroidx/webkit/WebSettingsCompat;->setForceDarkStrategy(Landroid/webkit/WebSettings;I)V
-
-    :cond_5a
+    :cond_54
     invoke-virtual {p0}, Landroid/app/Activity;->getWindow()Landroid/view/Window;
 
     move-result-object v0
@@ -289,19 +298,17 @@
 
     const/16 v2, 0x2010
 
-    const/4 v5, -0x1
-
     invoke-virtual {v1, v2}, Landroid/view/View;->setSystemUiVisibility(I)V
 
-    invoke-virtual {v0, v5}, Landroid/view/Window;->setStatusBarColor(I)V
+    invoke-virtual {v0, v4}, Landroid/view/Window;->setStatusBarColor(I)V
 
-    invoke-virtual {v0, v5}, Landroid/view/Window;->setNavigationBarColor(I)V
+    invoke-virtual {v0, v4}, Landroid/view/Window;->setNavigationBarColor(I)V
 
-    return-void
+    goto :goto_3d
 .end method
 
 .method public onCreate(Landroid/os/Bundle;)V
-    .registers 16
+    .registers 7
 
     const/4 v4, 0x2
 
@@ -312,12 +319,6 @@
     invoke-super {p0, p1}, Landroid/app/Activity;->onCreate(Landroid/os/Bundle;)V
 
     invoke-virtual {p0}, Lqinlili/PDF/WebPDF;->getPermission()V
-
-    const/4 v4, 0x2
-
-    const/4 v3, 0x0
-
-    const/4 v2, 0x1
 
     const v0, 0x7f030013
 
@@ -375,7 +376,7 @@
 
     move-result v1
 
-    if-eqz v1, :cond_6f
+    if-eqz v1, :cond_68
 
     const-string v1, "FORCE_DARK"
 
@@ -383,57 +384,45 @@
 
     move-result v1
 
-    if-eqz v1, :cond_63
+    if-eqz v1, :cond_5d
 
-    const v2, 0x2
+    invoke-static {v0, v4}, Landroidx/webkit/WebSettingsCompat;->setForceDark(Landroid/webkit/WebSettings;I)V
 
-    invoke-static {v0, v2}, Landroidx/webkit/WebSettingsCompat;->setForceDark(Landroid/webkit/WebSettings;I)V
-
-    :cond_63
+    :cond_5d
     const-string v1, "FORCE_DARK_STRATEGY"
 
     invoke-static {v1}, Landroidx/webkit/WebViewFeature;->isFeatureSupported(Ljava/lang/String;)Z
 
     move-result v1
 
-    if-eqz v1, :cond_6f
+    if-eqz v1, :cond_68
 
-    const/4 v1, 0x1
+    invoke-static {v0, v2}, Landroidx/webkit/WebSettingsCompat;->setForceDarkStrategy(Landroid/webkit/WebSettings;I)V
 
-    invoke-static {v0, v1}, Landroidx/webkit/WebSettingsCompat;->setForceDarkStrategy(Landroid/webkit/WebSettings;I)V
-
-    :cond_6f
-    const/4 v2, 0x1
-
+    :cond_68
     invoke-virtual {p0}, Lqinlili/PDF/WebPDF;->getIntent()Landroid/content/Intent;
-
-    move-result-object v4
-
-    if-eqz v4, :cond_de
-
-    invoke-virtual {v4}, Landroid/content/Intent;->getData()Landroid/net/Uri;
 
     move-result-object v0
 
-    if-eqz v0, :cond_de
+    if-eqz v0, :cond_d3
+
+    invoke-virtual {v0}, Landroid/content/Intent;->getData()Landroid/net/Uri;
+
+    move-result-object v0
+
+    if-eqz v0, :cond_d3
 
     invoke-virtual {v0}, Landroid/net/Uri;->toString()Ljava/lang/String;
 
     move-result-object v0
 
-    const/4 v4, 0x2
-
-    const/4 v3, 0x0
-
-    const/4 v2, 0x1
-
     const-string v1, "content://"
 
     invoke-virtual {v0, v1}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
 
-    move-result v8
+    move-result v1
 
-    if-nez v8, :cond_a4
+    if-nez v1, :cond_99
 
     new-instance v1, Ljava/lang/StringBuilder;
 
@@ -457,10 +446,10 @@
 
     invoke-virtual {v1, v0}, Landroid/webkit/WebView;->loadUrl(Ljava/lang/String;)V
 
-    :goto_a3
+    :goto_98
     return-void
 
-    :cond_a4
+    :cond_99
     const-string v0, "正在读取PDF...\n白屏属正常现象"
 
     invoke-static {p0, v0, v3}, Landroid/widget/Toast;->makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;
@@ -489,7 +478,7 @@
 
     move-result v1
 
-    if-eqz v1, :cond_f6
+    if-eqz v1, :cond_eb
 
     new-instance v1, Ljava/lang/StringBuilder;
 
@@ -513,34 +502,34 @@
 
     invoke-virtual {v1, v0}, Landroid/webkit/WebView;->loadUrl(Ljava/lang/String;)V
 
-    return-void
+    goto :goto_98
 
-    :cond_de
-    const-string v0, "moe.qinlili.pdf.OPEN_PDF"
-
+    :cond_d3
     invoke-virtual {p0}, Lqinlili/PDF/WebPDF;->getIntent()Landroid/content/Intent;
 
-    move-result-object v1
+    move-result-object v0
 
-    invoke-virtual {v1}, Landroid/content/Intent;->getAction()Ljava/lang/String;
+    invoke-virtual {v0}, Landroid/content/Intent;->getAction()Ljava/lang/String;
 
-    move-result-object v1
+    move-result-object v0
 
-    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+    const-string v1, "moe.qinlili.pdf.OPEN_PDF"
+
+    invoke-virtual {v1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
+
+    move-result v1
+
+    if-nez v1, :cond_f8
+
+    const-string v1, "moe.qinlili.pdf.PDF_URL"
+
+    invoke-virtual {v1, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
 
     move-result v0
 
-    if-nez v0, :cond_103
+    if-nez v0, :cond_132
 
-    const-string v0, "moe.qinlili.pdf.PDF_URL"
-
-    invoke-virtual {v0, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
-
-    move-result v0
-
-    if-nez v0, :cond_144
-
-    :cond_f6
+    :cond_eb
     const-string v0, "未指定PDF！"
 
     invoke-static {p0, v0, v3}, Landroid/widget/Toast;->makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;
@@ -551,9 +540,9 @@
 
     invoke-virtual {p0}, Lqinlili/PDF/WebPDF;->finishAndRemoveTask()V
 
-    goto :goto_a3
+    goto :goto_98
 
-    :cond_103
+    :cond_f8
     new-instance v0, Landroid/app/ProgressDialog;
 
     invoke-direct {v0, p0}, Landroid/app/ProgressDialog;-><init>(Landroid/content/Context;)V
@@ -594,19 +583,13 @@
 
     invoke-virtual {v0, v1}, Landroid/content/Intent;->setType(Ljava/lang/String;)Landroid/content/Intent;
 
-    const/4 v4, 0x2
-
     invoke-virtual {p0, v0, v4}, Lqinlili/PDF/WebPDF;->startActivityForResult(Landroid/content/Intent;I)V
 
-    const v0, 0x0
+    invoke-virtual {p0, v3, v3}, Lqinlili/PDF/WebPDF;->overridePendingTransition(II)V
 
-    const v1, 0x0
+    goto/16 :goto_98
 
-    invoke-virtual {p0, v0, v1}, Lqinlili/PDF/WebPDF;->overridePendingTransition(II)V
-
-    goto/16 :goto_a3
-
-    :cond_144
+    :cond_132
     iget-object v0, p0, Lqinlili/PDF/WebPDF;->w:Landroid/webkit/WebView;
 
     const-string v1, "file:///android_asset/pdf/web/viewer.html"
@@ -643,15 +626,15 @@
 
     invoke-virtual {v0, v1, v2}, Landroid/app/AlertDialog$Builder;->setPositiveButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
 
-    move-result-object v1
+    move-result-object v0
 
-    const-string v2, "取消"
+    const-string v1, "取消"
 
-    new-instance v0, Lqinlili/PDF/WebPDF$Exit;
+    new-instance v2, Lqinlili/PDF/WebPDF$Exit;
 
-    invoke-direct {v0, p0}, Lqinlili/PDF/WebPDF$Exit;-><init>(Lqinlili/PDF/WebPDF;)V
+    invoke-direct {v2, p0}, Lqinlili/PDF/WebPDF$Exit;-><init>(Lqinlili/PDF/WebPDF;)V
 
-    invoke-virtual {v1, v2, v0}, Landroid/app/AlertDialog$Builder;->setNegativeButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
+    invoke-virtual {v0, v1, v2}, Landroid/app/AlertDialog$Builder;->setNegativeButton(Ljava/lang/CharSequence;Landroid/content/DialogInterface$OnClickListener;)Landroid/app/AlertDialog$Builder;
 
     move-result-object v0
 
@@ -659,21 +642,19 @@
 
     move-result-object v0
 
-    const v3, 0x0
-
     invoke-virtual {v0, v3}, Landroid/app/AlertDialog;->setCancelable(Z)V
 
-    return-void
+    goto/16 :goto_98
 .end method
 
 .method public pinchEnable()Ljava/lang/String;
-    .registers 10
+    .registers 2
     .annotation runtime Landroid/webkit/JavascriptInterface;
     .end annotation
 
-    const-string v1, "true"
+    const-string v0, "true"
 
-    return-object v1
+    return-object v0
 .end method
 
 .method public print()V
@@ -792,23 +773,23 @@
     check-cast v1, Ljava/io/BufferedOutputStream;
 
     :try_start_4f
-    new-instance v3, Ljava/io/BufferedInputStream;
+    new-instance v2, Ljava/io/BufferedInputStream;
 
     invoke-virtual {p0}, Lqinlili/PDF/WebPDF;->getContentResolver()Landroid/content/ContentResolver;
 
-    move-result-object v2
+    move-result-object v3
 
-    invoke-virtual {v2, p1}, Landroid/content/ContentResolver;->openInputStream(Landroid/net/Uri;)Ljava/io/InputStream;
+    invoke-virtual {v3, p1}, Landroid/content/ContentResolver;->openInputStream(Landroid/net/Uri;)Ljava/io/InputStream;
 
-    move-result-object v2
+    move-result-object v3
 
-    invoke-direct {v3, v2}, Ljava/io/BufferedInputStream;-><init>(Ljava/io/InputStream;)V
+    invoke-direct {v2, v3}, Ljava/io/BufferedInputStream;-><init>(Ljava/io/InputStream;)V
     :try_end_5c
-    .catch Ljava/io/IOException; {:try_start_4f .. :try_end_5c} :catch_b1
-    .catchall {:try_start_4f .. :try_end_5c} :catchall_b6
+    .catch Ljava/io/IOException; {:try_start_4f .. :try_end_5c} :catch_b6
+    .catchall {:try_start_4f .. :try_end_5c} :catchall_b4
 
     :try_start_5c
-    new-instance v2, Ljava/io/BufferedOutputStream;
+    new-instance v3, Ljava/io/BufferedOutputStream;
 
     new-instance v0, Ljava/io/FileOutputStream;
 
@@ -816,25 +797,25 @@
 
     invoke-direct {v0, v4, v5}, Ljava/io/FileOutputStream;-><init>(Ljava/lang/String;Z)V
 
-    invoke-direct {v2, v0}, Ljava/io/BufferedOutputStream;-><init>(Ljava/io/OutputStream;)V
+    invoke-direct {v3, v0}, Ljava/io/BufferedOutputStream;-><init>(Ljava/io/OutputStream;)V
     :try_end_67
-    .catch Ljava/io/IOException; {:try_start_5c .. :try_end_67} :catch_83
-    .catchall {:try_start_5c .. :try_end_67} :catchall_8b
+    .catch Ljava/io/IOException; {:try_start_5c .. :try_end_67} :catch_85
+    .catchall {:try_start_5c .. :try_end_67} :catchall_99
 
     const/16 v0, 0x400
 
     :try_start_69
     new-array v0, v0, [B
 
-    invoke-virtual {v3, v0}, Ljava/io/BufferedInputStream;->read([B)I
+    invoke-virtual {v2, v0}, Ljava/io/BufferedInputStream;->read([B)I
 
     :cond_6e
-    invoke-virtual {v2, v0}, Ljava/io/BufferedOutputStream;->write([B)V
+    invoke-virtual {v3, v0}, Ljava/io/BufferedOutputStream;->write([B)V
 
-    invoke-virtual {v3, v0}, Ljava/io/BufferedInputStream;->read([B)I
+    invoke-virtual {v2, v0}, Ljava/io/BufferedInputStream;->read([B)I
     :try_end_74
-    .catch Ljava/io/IOException; {:try_start_69 .. :try_end_74} :catch_a8
-    .catchall {:try_start_69 .. :try_end_74} :catchall_a3
+    .catch Ljava/io/IOException; {:try_start_69 .. :try_end_74} :catch_ae
+    .catchall {:try_start_69 .. :try_end_74} :catchall_a8
 
     move-result v1
 
@@ -842,46 +823,46 @@
 
     if-ne v1, v4, :cond_6e
 
-    :goto_78
-    if-eqz v3, :cond_7d
+    move-object v0, v2
 
-    :try_start_7a
-    invoke-virtual {v3}, Ljava/io/BufferedInputStream;->close()V
+    move-object v1, v3
 
-    :cond_7d
-    if-eqz v2, :cond_82
+    :goto_7a
+    if-eqz v0, :cond_7f
 
-    invoke-virtual {v2}, Ljava/io/BufferedOutputStream;->close()V
-    :try_end_82
-    .catch Ljava/io/IOException; {:try_start_7a .. :try_end_82} :catch_9e
+    :try_start_7c
+    invoke-virtual {v0}, Ljava/io/BufferedInputStream;->close()V
 
-    :cond_82
-    :goto_82
+    :cond_7f
+    if-eqz v1, :cond_84
+
+    invoke-virtual {v1}, Ljava/io/BufferedOutputStream;->close()V
+    :try_end_84
+    .catch Ljava/io/IOException; {:try_start_7c .. :try_end_84} :catch_a3
+
+    :cond_84
+    :goto_84
     return-void
 
-    :catch_83
+    :catch_85
     move-exception v0
 
-    move-object v2, v3
+    move-object v6, v0
 
-    :goto_85
-    :try_start_85
-    invoke-virtual {v0}, Ljava/io/IOException;->printStackTrace()V
-    :try_end_88
-    .catchall {:try_start_85 .. :try_end_88} :catchall_ac
+    move-object v0, v2
 
-    move-object v3, v2
+    move-object v2, v6
 
-    move-object v2, v1
+    :goto_89
+    :try_start_89
+    invoke-virtual {v2}, Ljava/io/IOException;->printStackTrace()V
+    :try_end_8c
+    .catchall {:try_start_89 .. :try_end_8c} :catchall_8d
 
-    goto :goto_78
+    goto :goto_7a
 
-    :catchall_8b
-    move-exception v0
-
-    move-object v2, v0
-
-    move-object v0, v3
+    :catchall_8d
+    move-exception v2
 
     :goto_8e
     if-eqz v0, :cond_93
@@ -894,47 +875,13 @@
 
     invoke-virtual {v1}, Ljava/io/BufferedOutputStream;->close()V
     :try_end_98
-    .catch Ljava/io/IOException; {:try_start_90 .. :try_end_98} :catch_99
+    .catch Ljava/io/IOException; {:try_start_90 .. :try_end_98} :catch_9e
 
     :cond_98
     :goto_98
     throw v2
 
-    :catch_99
-    move-exception v0
-
-    invoke-virtual {v0}, Ljava/io/IOException;->printStackTrace()V
-
-    goto :goto_98
-
-    :catch_9e
-    move-exception v0
-
-    invoke-virtual {v0}, Ljava/io/IOException;->printStackTrace()V
-
-    goto :goto_82
-
-    :catchall_a3
-    move-exception v0
-
-    move-object v1, v2
-
-    move-object v2, v0
-
-    move-object v0, v3
-
-    goto :goto_8e
-
-    :catch_a8
-    move-exception v0
-
-    move-object v1, v2
-
-    move-object v2, v3
-
-    goto :goto_85
-
-    :catchall_ac
+    :catchall_99
     move-exception v0
 
     move-object v6, v0
@@ -945,19 +892,53 @@
 
     goto :goto_8e
 
-    :catch_b1
-    move-exception v2
+    :catch_9e
+    move-exception v0
 
-    move-object v6, v2
+    invoke-virtual {v0}, Ljava/io/IOException;->printStackTrace()V
 
-    move-object v2, v0
+    goto :goto_98
 
-    move-object v0, v6
+    :catch_a3
+    move-exception v0
 
-    goto :goto_85
+    invoke-virtual {v0}, Ljava/io/IOException;->printStackTrace()V
 
-    :catchall_b6
+    goto :goto_84
+
+    :catchall_a8
+    move-exception v0
+
+    move-object v1, v3
+
+    move-object v6, v0
+
+    move-object v0, v2
+
+    move-object v2, v6
+
+    goto :goto_8e
+
+    :catch_ae
+    move-exception v0
+
+    move-object v1, v3
+
+    move-object v6, v0
+
+    move-object v0, v2
+
+    move-object v2, v6
+
+    goto :goto_89
+
+    :catchall_b4
     move-exception v2
 
     goto :goto_8e
+
+    :catch_b6
+    move-exception v2
+
+    goto :goto_89
 .end method
